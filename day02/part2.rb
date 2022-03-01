@@ -10,9 +10,8 @@ instructions = File.readlines(file_path, chomp: true)
                    .map { |inst| Instruction.new(command: inst[0].to_s.downcase.to_sym, amount: inst[1].to_i) }
 
 position = Position.new(aim: 0, depth: 0, horizon: 0)
-positions = instructions.reduce([position]) do |acc, inst|
+positions = instructions.each_with_object([position]) do |inst, acc|
   acc << inst.update_position(acc.last)
-  acc
 end
 
 puts positions
